@@ -1,1 +1,55 @@
 :root{font-family:"Aptos","PingFang SC",system-ui,sans-serif;color:#20211d;background:#eef1e8}body{margin:0}.shell{min-height:100vh;display:grid;grid-template-columns:260px 1fr}aside{background:#223126;color:#f5f1e6;padding:28px 20px;border-right:6px solid #d39b46}.brand{font-size:20px;font-weight:800;line-height:1.25;margin-bottom:24px}nav{display:grid;gap:8px}button{border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;border-radius:6px;cursor:pointer}button.active,button:hover{background:#f5f1e6;color:#223126}.page{padding:30px;display:grid;gap:22px}.page-head{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #c9d0c3;padding-bottom:18px}.eyebrow{margin:0 0 8px;color:#7d4d18;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.08em}h1{font-size:clamp(28px,4vw,46px);margin:0;letter-spacing:0}h2{margin:0 0 14px;font-size:18px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.stat,.panel{background:#fbfaf4;border:1px solid #d8d6c8;border-radius:8px;padding:18px}.stat span{display:block;color:#596257;font-size:13px}.stat strong{font-size:30px;color:#274335}.workbench{display:grid;grid-template-columns:2fr 1fr;gap:18px}.row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;border-top:1px solid #e4e0d3;padding:12px 0}.badge{display:inline-flex;align-items:center;min-height:24px;border-radius:999px;background:#e4efe4;color:#244b31;padding:2px 10px;font-size:12px;font-weight:800}.shared-widget,.empty{border:1px dashed #b8b09f;padding:14px;border-radius:8px}@media (max-width:760px){.shell{grid-template-columns:1fr}aside{position:static}.metrics,.workbench{grid-template-columns:1fr}.page{padding:18px}.page-head{align-items:flex-start;gap:12px;flex-direction:column}}
+
+/* 盲文六点：左列 1/2/3，右列 4/5/6 */
+.braille-grid{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:10px;justify-items:center;align-items:center}
+.dot{width:26px;height:26px;border-radius:50%;background:#e3e0d4;border:2px solid #b9b4a3;box-sizing:border-box}
+.dot.raised{background:#274335;border-color:#1d3327;box-shadow:inset 0 2px 4px rgba(0,0,0,.35)}
+.braille-cell{display:flex;justify-content:center;padding:6px}
+.six-dot-input{display:flex;justify-content:center;padding:8px 0}
+.dot-button{padding:0;cursor:pointer;transition:transform .06s ease}
+.dot-button:hover:not(:disabled){transform:scale(1.08)}
+.dot-button:disabled{cursor:default}
+/* 判定标注：该点但未点 = 红圈；不该点却点了 = 橙底 */
+.dot.missing{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.35);background:#f6ded9}
+.dot.extra{background:#e08a2d;border-color:#b96c12;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.braille-grid.locked .dot-button:hover{transform:none}
+.practice-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.panel-hint{margin:4px 0 0;color:#596257;font-size:13px}
+.practice-layout{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:18px;margin-top:8px}
+.prompt-card,.entry-card,.feedback-card{border:1px solid #e0ddcf;border-radius:8px;padding:18px;background:#fffdf7;text-align:center}
+.prompt-letter{display:block;font-size:56px;font-weight:800;line-height:1.1;color:#274335;text-transform:lowercase}
+.prompt-pinyin{display:block;color:#7d4d18;font-weight:700;margin:2px 0 10px}
+.judge-legend{font-size:12px;color:#596257;display:flex;gap:10px;justify-content:center;align-items:center;margin:12px 0 0;flex-wrap:wrap}
+.legend-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.legend-dot.missing{border:2px solid #c0392b;background:#f6ded9}
+.legend-dot.extra{background:#e08a2d;border:2px solid #b96c12}
+.entry-actions{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.action{border:1px solid #274335;border-radius:6px;padding:8px 16px;font-weight:700;background:#fbfaf4;color:#274335;cursor:pointer}
+.action.primary{background:#274335;color:#f5f1e6}
+.action.ghost{border-style:dashed;background:transparent;margin-top:10px;font-size:12px;color:#7a8275}
+.feedback-card{text-align:left}
+.feedback-card h3{margin:0 0 10px;font-size:15px}
+.feedback-card .muted{color:#7a8275;font-size:13px}
+.retry-tip{color:#b96c12;font-weight:700;font-size:13px;margin:10px 0 0}
+.correct-tip{color:#244b31;font-weight:700;font-size:13px;margin:10px 0 0}
+.mistake-reason{color:#a33223;font-size:13px;margin:10px 0 0;line-height:1.7}
+.result-badge{display:inline-flex;align-items:center;gap:8px}
+.result-badge em{font-style:normal;font-weight:800;font-size:13px}
+.badge.correct{background:#dcecde;color:#1d4a2d}
+.badge.wrong{background:#f6ded9;color:#8c2b1f}
+.badge.retry{background:#fbeccf;color:#8a5a12}
+.badge.inputting{background:#e6ece6;color:#3a4a3e}
+.badge.submitted{background:#dde7ec;color:#244252}
+.badge.finished{background:#e2e0f0;color:#373064}
+.run-status{display:flex;gap:10px;font-size:13px;color:#596257}
+.run-status span{background:#fbfaf4;border:1px solid #d8d6c8;border-radius:999px;padding:4px 12px}
+@media (max-width:900px){.practice-layout{grid-template-columns:1fr}}
+
+/* 错题本 */
+.mistake-list{display:grid;gap:14px}
+.mistake-row{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;border-top:1px solid #e4e0d3;padding:14px 0}
+.mistake-prompt{display:flex;flex-direction:column;align-items:center;min-width:90px}
+.mistake-prompt strong{font-size:26px;text-transform:lowercase;color:#274335}
+.mistake-prompt span{font-size:12px;color:#7d4d18}
+.mistake-detail p{margin:6px 0 0;font-size:14px}
+.mistake-detail .muted{color:#7a8275}

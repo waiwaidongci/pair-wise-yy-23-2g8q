@@ -53,6 +53,14 @@ frontend/src/api, stores, types, constants, constructors, components/common, hoo
 - PracticeMode: constants/PracticeMode、types/PracticeMode、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - SymbolCategory: constants/SymbolCategory、types/SymbolCategory、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - MasteryLevel: constants/MasteryLevel、types/MasteryLevel、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- MistakeReason（漏点/多点/混合，练习判定新增）: constants/MistakeReason、types/MistakeReason、utils/braillePattern、constructors/AnswerRecordConstructor、pages/PracticePage、pages/MistakesPage。
+
+## 练习模式的输入 / 判定 / 记录三层划分
+
+- 输入层：`hooks/useSixDotInput.ts`（六点草稿状态）+ `components/practice/SixDotInput.tsx`（六个可点位置）。换题或“再试一次”时草稿由输入层 `clear` 清掉，未提交点阵不入库。
+- 判定层：`utils/braillePattern.ts`（点阵解析、漏点 `missingDots`/多点 `extraDots` 比较、错题归类）+ `hooks/useBraillePattern.ts`（纯派生判定）。
+- 编排层：`hooks/usePracticeRun.ts` 实现“第一遍答错可再试、第二遍无论对错都保存、仍错把两遍答案写入错题本”的两遍状态机；统计由 `hooks/usePracticeSession.ts` 汇总，只认已提交记录。
+- 记录保存层：`db/indexeddb.ts`（IndexedDB 事务）+ `api/AnswerRecord.ts`、`api/PracticeSession.ts` + `stores/AnswerRecordStore.ts`、`stores/PracticeSessionStore.ts`。离开练习页时按已提交记录汇总会话并保存。
 
 ## 为什么会牵一发动全身
 

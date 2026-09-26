@@ -1,8 +1,16 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { classifyMistake, judgePattern } from "../utils/braillePattern";
 
-export function useBraillePattern<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+/**
+ * 判定层 hook：对一次提交的点阵给出对错、漏点、多点与错题归类。
+ * 纯派生状态，不保存记录；记录保存由记录层（api/store）承担。
+ */
+export function useBraillePattern(answer: string, target: string) {
+  return useMemo(() => {
+    const judgement = judgePattern(answer, target);
+    return {
+      ...judgement,
+      mistakeReason: classifyMistake(judgement)
+    };
+  }, [answer, target]);
 }

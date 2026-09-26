@@ -1,124 +1,58 @@
+// 标准盲文六点编号：左列 1/2/3，右列 4/5/6。
+// cell_pattern 为凸起点位升序以 "-" 拼接，空阵为 ""。
+const letterSymbols = [
+  { letter: "a", pinyin: "啊 ā", cell_pattern: "1" },
+  { letter: "b", pinyin: "玻 bō", cell_pattern: "1-2" },
+  { letter: "c", pinyin: "雌 cí", cell_pattern: "1-4" },
+  { letter: "d", pinyin: "得 dé", cell_pattern: "1-4-5" },
+  { letter: "e", pinyin: "鹅 é", cell_pattern: "1-5" },
+  { letter: "f", pinyin: "佛 fó", cell_pattern: "1-2-4" },
+  { letter: "g", pinyin: "哥 gē", cell_pattern: "1-2-4-5" },
+  { letter: "h", pinyin: "喝 hē", cell_pattern: "1-2-5" },
+  { letter: "i", pinyin: "衣 yī", cell_pattern: "2-4" },
+  { letter: "j", pinyin: "基 jī", cell_pattern: "2-4-5" },
+  { letter: "k", pinyin: "科 kē", cell_pattern: "1-3" },
+  { letter: "l", pinyin: "勒 lè", cell_pattern: "1-2-3" },
+  { letter: "m", pinyin: "摸 mō", cell_pattern: "1-3-4" },
+  { letter: "n", pinyin: "讷 nè", cell_pattern: "1-3-4-5" },
+  { letter: "o", pinyin: "喔 ō", cell_pattern: "1-3-5" },
+  { letter: "p", pinyin: "坡 pō", cell_pattern: "1-2-3-4" },
+  { letter: "q", pinyin: "欺 qī", cell_pattern: "1-2-3-4-5" },
+  { letter: "r", pinyin: "日 rì", cell_pattern: "1-2-3-5" },
+  { letter: "s", pinyin: "思 sī", cell_pattern: "2-3-4" },
+  { letter: "t", pinyin: "特 tè", cell_pattern: "2-3-4-5" },
+  { letter: "u", pinyin: "乌 wū", cell_pattern: "1-3-6" },
+  { letter: "v", pinyin: "迂 yū", cell_pattern: "1-2-3-6" },
+  { letter: "w", pinyin: "蛙 wā", cell_pattern: "2-4-5-6" },
+  { letter: "x", pinyin: "希 xī", cell_pattern: "1-3-4-6" },
+  { letter: "y", pinyin: "呀 yā", cell_pattern: "1-3-4-5-6" },
+  { letter: "z", pinyin: "资 zī", cell_pattern: "1-3-5-6" }
+];
+
 export const mockData = {
-  "brailleSymbol": [
+  brailleSymbol: letterSymbols.map((item, index) => {
+    const id = index + 1;
+    return {
+      id,
+      cell_pattern: item.cell_pattern,
+      letter: item.letter,
+      pinyin: item.pinyin,
+      category: "LETTER",
+      difficulty: index < 10 ? "EASY" : index < 20 ? "MEDIUM" : "HARD",
+      audio_hint_key: `letter.${item.letter}`
+    };
+  }),
+  lesson: [
     {
-      "id": 1,
-      "cell_pattern": "cell pattern 1",
-      "letter": "letter 1",
-      "pinyin": "pinyin 1",
-      "category": "TEXT_TO_CELL",
-      "difficulty": "difficulty 1",
-      "audio_hint_key": "audio hint key 1"
-    },
-    {
-      "id": 2,
-      "cell_pattern": "cell pattern 2",
-      "letter": "letter 2",
-      "pinyin": "pinyin 2",
-      "category": "LISTENING",
-      "difficulty": "difficulty 2",
-      "audio_hint_key": "audio hint key 2"
-    },
-    {
-      "id": 3,
-      "cell_pattern": "cell pattern 3",
-      "letter": "letter 3",
-      "pinyin": "pinyin 3",
-      "category": "MIXED",
-      "difficulty": "difficulty 3",
-      "audio_hint_key": "audio hint key 3"
+      id: 1,
+      title: "汉语拼音字母六点入门",
+      symbol_ids: letterSymbols.map((_, index) => index + 1),
+      stage: "入门",
+      estimated_minutes: "15",
+      unlock_rule: "NONE"
     }
   ],
-  "lesson": [
-    {
-      "id": 1,
-      "title": "title 1",
-      "symbol_ids": [
-        1,
-        2
-      ],
-      "stage": "stage 1",
-      "estimated_minutes": "estimated minutes 1",
-      "unlock_rule": "unlock rule 1"
-    },
-    {
-      "id": 2,
-      "title": "title 2",
-      "symbol_ids": [
-        1,
-        2
-      ],
-      "stage": "stage 2",
-      "estimated_minutes": "estimated minutes 2",
-      "unlock_rule": "unlock rule 2"
-    },
-    {
-      "id": 3,
-      "title": "title 3",
-      "symbol_ids": [
-        1,
-        2
-      ],
-      "stage": "stage 3",
-      "estimated_minutes": "estimated minutes 3",
-      "unlock_rule": "unlock rule 3"
-    }
-  ],
-  "practiceSession": [
-    {
-      "id": 1,
-      "lesson_id": 1,
-      "mode": "mode 1",
-      "started_at": "2026-06-11T09:00:00Z",
-      "finished_at": "2026-06-11T09:00:00Z",
-      "score": "LOW",
-      "mistake_count": "mistake count 1"
-    },
-    {
-      "id": 2,
-      "lesson_id": 2,
-      "mode": "mode 2",
-      "started_at": "2026-06-12T09:00:00Z",
-      "finished_at": "2026-06-12T09:00:00Z",
-      "score": "MEDIUM",
-      "mistake_count": "mistake count 2"
-    },
-    {
-      "id": 3,
-      "lesson_id": 3,
-      "mode": "mode 3",
-      "started_at": "2026-06-13T09:00:00Z",
-      "finished_at": "2026-06-13T09:00:00Z",
-      "score": "HIGH",
-      "mistake_count": "mistake count 3"
-    }
-  ],
-  "answerRecord": [
-    {
-      "id": 1,
-      "session_id": 1,
-      "symbol_id": 1,
-      "user_answer": "user answer 1",
-      "correct": "correct 1",
-      "latency_ms": "latency ms 1",
-      "mistake_reason": "mistake reason 1"
-    },
-    {
-      "id": 2,
-      "session_id": 2,
-      "symbol_id": 2,
-      "user_answer": "user answer 2",
-      "correct": "correct 2",
-      "latency_ms": "latency ms 2",
-      "mistake_reason": "mistake reason 2"
-    },
-    {
-      "id": 3,
-      "session_id": 3,
-      "symbol_id": 3,
-      "user_answer": "user answer 3",
-      "correct": "correct 3",
-      "latency_ms": "latency ms 3",
-      "mistake_reason": "mistake reason 3"
-    }
-  ]
+  // 练习会话与答题记录运行时落在 IndexedDB，种子不再灌入脏数据
+  practiceSession: [],
+  answerRecord: []
 } as const;

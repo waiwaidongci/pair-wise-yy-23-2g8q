@@ -1,8 +1,26 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { listAnswerRecord } from "../api/AnswerRecord";
 
-export function useIndexedDbStore<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+/**
+ * 记录层 hook：读取 IndexedDB 中已提交的答题记录（错题本/统计共用）。
+ * 未提交点阵不会进入 IndexedDB，因此这里天然只含已提交记录。
+ */
+export function useIndexedDbStore() {
+  const [records, setRecords] = useState<Awaited<ReturnType<typeof listAnswerRecord>>>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void listAnswerRecord().then((rows) => {
+      if (!cancelled) {
+        setRecords(rows);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { records, loading };
 }
