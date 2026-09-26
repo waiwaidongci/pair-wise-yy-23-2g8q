@@ -1,5 +1,11 @@
-import { StatusBadge } from "./StatusBadge";
+export type ResultTone = "CORRECT" | "WRONG" | "RETRY";
 
-export function ResultBadge({ title = "ResultBadge", value = "READY" }: { title?: string; value?: string }) {
-  return <div className="shared-widget"><strong>{title}</strong><StatusBadge value={value} /></div>;
+const RESULT_TEXT: Record<ResultTone, string> = {
+  CORRECT: "回答正确",
+  WRONG: "回答错误",
+  RETRY: "再试一次"
+};
+
+export function ResultBadge({ tone }: { tone: ResultTone }) {
+  return <span className={`badge result-badge ${tone.toLowerCase()}`}>{RESULT_TEXT[tone]}</span>;
 }
